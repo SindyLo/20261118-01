@@ -178,6 +178,21 @@ button {
             }
         }
     }
+}
 
-
+.dice-cube.stopped { animation: none; }
+.result-card { max-height: none; margin-bottom: 24px; }
+.dice-number { min-height: 36px; font-size: 22px; font-weight: bold; }
+@media (max-width: 520px) {
+    .dice-stage { gap: 16px; padding-left: 8px; padding-right: 8px; }
+    .dice-scene, .dice-cube { width: 70px; height: 70px; }
+    .cube-face { font-size: 54px; }
+    .face-front { transform: translateZ(35px); }
+    .face-back { transform: rotateY(180deg) translateZ(35px); }
+    .face-right { transform: rotateY(90deg) translateZ(35px); }
+    .face-left { transform: rotateY(-90deg) translateZ(35px); }
+    .face-top { transform: rotateX(90deg) translateZ(35px); }
+    .face-bottom { transform: rotateX(-90deg) translateZ(35px); }
+    .result-row { gap: 8px !important; grid-template-columns: 45px repeat(3, 1fr) !important; }
+    .roll-btn { width: 90%; }
 }

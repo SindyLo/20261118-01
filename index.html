@@ -46,9 +46,9 @@
             <div class="dice-icon">🎲</div>
             <span>擲骰子</span>
         </button>
-        <div class="result-card">
+        <div class="result-card" style="display: none;">
             <div class="result-list">
-                <div class="result-row">
+                <!-- <div class="result-row">
                     <div class="row-number">1</div>
                     <div class="dice-number">1</div>
                     <div class="dice-number">5</div>
@@ -137,11 +137,69 @@
                     <div class="dice-number match">6</div>
                     <div class="dice-number">1</div>
                     <div class="dice-number match">6</div>
-                </div>
+                </div> -->
             </div>
         </div>
     </main>
+  <script>
+        let rollButton = document.querySelector('.roll-btn');
+        let resultCard = document.querySelector('.result-card');
+        let resultList = document.querySelector('.result-list');
+        let diceCubes = document.querySelectorAll('.dice-cube');
+        let count = 0;
+        let angles = ['rotateX(0deg) rotateY(0deg)', 'rotateX(90deg) rotateY(0deg)', 'rotateX(0deg) rotateY(-90deg)', 'rotateX(0deg) rotateY(90deg)', 'rotateX(-90deg) rotateY(0deg)', 'rotateX(0deg) rotateY(180deg)'];
 
+        function randomDice() {
+            return Math.floor(Math.random() * 6) + 1;
+        }
+
+        function stopDice(numbers) {
+            for (let i = 0; i < diceCubes.length; i++) {
+                diceCubes[i].classList.add('stopped');
+                diceCubes[i].style.transform = angles[numbers[i] - 1];
+            }
+        }
+        function addResult(numbers) {
+            count = count + 1;
+            let row = document.createElement('div');
+            row.className = 'result-row';
+            let rowNumber = document.createElement('div');
+            rowNumber.className = 'row-number';
+            rowNumber.textContent = count;
+            row.appendChild(rowNumber);
+            for (let i = 0; i < numbers.length; i++) {
+                let cell = document.createElement('div');
+                cell.className = 'dice-number';
+                cell.textContent = numbers[i];
+                for (let j = 0; j < numbers.length; j++) {
+                    if (i !== j && numbers[i] === numbers[j]) {
+                        cell.classList.add('match');
+                    }
+                }
+                row.appendChild(cell);
+            }
+            resultList.appendChild(row);
+        }
+        function rollThreeDice() {
+            let numbers = [];
+            for (let i = 0; i < 3; i++) {
+                numbers.push(randomDice());
+            }
+            addResult(numbers);
+            return numbers;
+        }
+
+        rollButton.onclick = function () {
+            resultList.textContent = '';
+            count = 0;
+            resultCard.style.display = 'block';
+            let lastNumbers = [];
+            for (let i = 0; i < 15; i++) {
+                lastNumbers = rollThreeDice();
+            }
+            stopDice(lastNumbers);
+        };
+    </script>
 </body>
 
 </html>
